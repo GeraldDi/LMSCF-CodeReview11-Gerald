@@ -59,7 +59,7 @@ $resItem=mysqli_query($conn, "SELECT * FROM pets");
                <th>Age</th>
                <th>Size</th>
                <th>City</th>
-               <th>ZIP-code</th>
+               <th>ZIPcode</th>
                <th>Address</th>
                <th>Website</th>
                <th>Hobbies</th>
@@ -80,7 +80,7 @@ $resItem=mysqli_query($conn, "SELECT * FROM pets");
                        <td>" .$row['age']."</td>
                        <td>" .$row['size']."</td>
                        <td>" .$row['city']."</td>
-                       <td>" .$row['ZIP-code']."</td>
+                       <td>" .$row['ZIPcode']."</td>
                        <td>" .$row['address']."</td>
                        <td>" .$row['website']."</td>
                        <td>" .$row['hobbies']."</td>

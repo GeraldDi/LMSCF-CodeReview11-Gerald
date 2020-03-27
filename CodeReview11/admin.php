@@ -4,102 +4,101 @@ session_start();
 require_once 'dbconnect.php';
 
 // if session is not set this will redirect to login page
-// if( !isset($_SESSION['user' ]) ) {
-//  header("Location: index.php");
-//  exit;
-// }
-// select logged-in users details
-$res=mysqli_query($conn, "SELECT * FROM users WHERE userId=".$_SESSION['admin']);
-$userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
-
-$resItem=mysqli_query($conn, "SELECT * FROM items");
+if( !isset($_SESSION['user' ]) ) {
+ header("Location: index.php");
+ exit;
+}
 
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welcome to the Admin Page- <?php echo $userRow['userEmail' ]; ?></title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeReview11 admin-page</title>
+
+   <style type="text/css">
+
+   </style>
+
 </head>
-<body >
-			<div style="text-align: left; font-size: 2em;">
-				Current account: <b><?php echo $userRow['userName' ]; ?><b>
-			</div>
-           <div>Admin Page          	
-           </div>
-           <a href="logout.php?logout">Sign Out</a><br>
+<body>
 
-           <br>
-
-<!--            <form 
- 			action="server-side.php" 
-           method= "post">
-           	<div>Insert new item here:           		
-           	</div>
-		       <table cellspacing= "0" cellpadding="0">
-		           <tr>
-		               <th>Itemname</th >
-		               <td><input  type="text" name="itemName"  placeholder="itemname" /></td >
-		           </tr>    
-		           <tr>
-		               <th>Description</th>
-		               <td><input  type="text" name= "itemdescription" placeholder="description"/></td>
-		           </tr>
-		           <tr>
-		               <th>Price</th>
-		               <td><input type="text"  name="price" placeholder ="10" /></td>
-		           </tr>
-		           <tr>
-		               <td><button type ="submit">Insert item</button></td>
-		               
-		           </tr >
-		       </table>
-		   </form> -->
-
+	<p>Add a new pet:</p>	
 		<form id="myForm"  action="server-side.php" method="POST">
-               <input type="text" name= "itemName" placeholder="itemName">
-               <input type="text" name= "itemdescription" placeholder="itemdescription">
-               <input type="text" name= "price" placeholder="10">
+               <input type="text" name= "description" placeholder="description">
+               <input type="text" name= "age" placeholder="age">
+               <input type="text" name= "size" placeholder="size">
+               <input type="text" name= "city" placeholder="city">
+               <input type="text" name= "ZIPcode" placeholder="ZIPcode">
+               <input type="text" name= "address" placeholder="address">
+               <input type="text" name= "name" placeholder="name">
+               <input type="text" name= "image" placeholder="image">
+               <input type="text" name= "website" placeholder="website">
+               <input type="text" name= "hobbies" placeholder="hobbies">
+               <input type="text" name= "date" placeholder="date">
+               
                <input type="submit" id ="submit">
        </form>
-       <span id="message"></span>
 
-		   <br>
+<div class ="text-center ">
+  <div class="h1 text-center m-2 text-white">List of all pets</div>
+   <a href= "general.php"><button type="button" class="ml-5 bg-success">Show small+large</button></a>
+   <a href= "senior.php"><button type="button" class="ml-5 bg-primary">Seniors</button></a>
+   <table  border="1" cellspacing= "0" cellpadding="0" class="bg-white">
+       <thead >
+           <tr>
+               <th>Description</th>
+               <th>Age</th>
+               <th>Size</th>        		              
+               <th>City</th>
+               <th>ZIPcode</th>
+               <th>Address</th>
+               <th>Name</th>
+               <th>Image</th>
+               <th>Website</th>
+               <th>Hobbies</th>
+               <th>Date</th>
+               <th>Delete</th>
+           </tr>
+       </thead>
+       <tbody>
 
-           <?php
+            <?php
+           $sql = "SELECT * FROM pets";
+           $result = $conn->query($sql);
 
-         
-           if($resItem->num_rows == 0 ){
-			echo "No result";
-		}elseif($resItem->num_rows == 1){
-			$row = $resItem->fetch_assoc();
-			echo $value["itemId"]. " ----- " .$value["itemName"]. " ". $value["itemdescription"]." ".$value["price"]. " <a href='booking.php?id=".$value["item_id"]."'>Buy Here</a><br>";
-		}else {
-			$rows = $resItem->fetch_all(MYSQLI_ASSOC);
-			foreach ($rows as $value) {
-				echo $value["itemId"]. " ----- " .$value["itemName"]. " description: ". $value["itemdescription"]." price: ".$value["price"]. " <a href='server-side2.php?did=".$value['itemId']."' >Delete</a><br>";
-				
-			}
-		}
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                   echo  "<tr>
+                       <td>" .$row['description']."</td>
+                       <td>" .$row['age']."</td>
+                       <td>" .$row['size']."</td>
+                       <td>" .$row['city']."</td>
+                       <td>" .$row['ZIPcode']."</td>
+                       <td>" .$row['address']."</td>
+ 					   <td>" .$row['name']."</td>
+ 					   <td><img width=100% src =" .$row['image']."></td>
+ 					   <td>" .$row['website']."</td>
+ 					   <td>" .$row['hobbies']."</td>
+ 					   <td>" .$row['date']."</td>
+             <td><a href='server-side2.php?did=".$row['petID']."'>Delete</a></td>
+                       
+                   </tr>" ;
+               }
+           } else  {
+               echo  "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+           }
+            ?>
 
-
-		// if ($_POST) {
-		// 	$itemId = $_POST['itemId'];
-		// 	$sqld = "DELETE FROM items WHERE itemId = {$itemId}";
-		// 	if($connect->query($sqld) === TRUE) {
-	 //       echo "<p>Successfully deleted!!</p>" ;
-		//    } else {
-		//        echo "Error updating record : " . $connect->error;
-		//    }
-		// }
-
-
-
- 		?>
- 
-       
+           
+       </tbody>
+   </table>
+</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
 	<script src="script-ajax.js"  type="text/javascript"></script> 
+
 </body>
 </html>
 <?php ob_end_flush(); ?>
