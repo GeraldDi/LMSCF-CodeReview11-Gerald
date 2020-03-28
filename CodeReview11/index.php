@@ -15,17 +15,6 @@ if(isset($_SESSION['admin']) != ''){
  exit;
 }
 
-//Way 2  ->how to set a value for the session?
-//$_SESSION['user'] = $uservalue;
-
-//$uservalue=mysqli_query($conn, "SELECT usertype FROM users WHERE userEmail='$email'" );
-
-// if(isset($_SESSION['usertype']) == 'admin'){
-//  header("Location: admin.php");
-//  exit;
-// }
-
-
 $error = false;
 
 //when you click on the the sign-in button:

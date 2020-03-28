@@ -1,7 +1,6 @@
 <?php
-/* Attempt MySQL server connection. Assuming you are running MySQL
-server with default setting (user 'root' with no password) */
-$link = mysqli_connect("localhost", "root", "", "phpday5");
+
+$link = mysqli_connect("localhost", "root", "", "cr11_gerald_petadoption");
  
 // Check connection
 if($link === false){
@@ -10,7 +9,7 @@ if($link === false){
  
 if(isset($_REQUEST["term"])){
     // Prepare a select statement
-    $sql = "SELECT * FROM items WHERE itemName LIKE ?";
+    $sql = "SELECT * FROM pets WHERE description LIKE ?";
     
     if($stmt = mysqli_prepare($link, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -27,7 +26,7 @@ if(isset($_REQUEST["term"])){
             if(mysqli_num_rows($result) > 0){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-                    echo "<p>" . $row["itemName"] . "</p>";
+                    echo "<p>" . $row["description"] . "</p>";
                 }
             } else{
                 echo "<p>No matches found</p>";
