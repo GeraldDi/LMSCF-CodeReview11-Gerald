@@ -106,12 +106,9 @@ $resItem=mysqli_query($conn, "SELECT * FROM pets");
            } else  {
                echo  "<div><div colspan='5'><center>No Data Avaliable</center></div></div>";
            }
-            ?>
-     
+            ?>    
        </div>
 </div>
-
-
     <script>
 
                function initMap() {
@@ -157,7 +154,8 @@ $resItem=mysqli_query($conn, "SELECT * FROM pets");
 
            </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtjaD-saUZQ47PbxigOg25cvuO6_SuX3M&callback=initMap"
-     async defer></script>
+     async defer>
+    </script>
 
 </body>
 </html>
